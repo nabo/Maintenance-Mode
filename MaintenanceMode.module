@@ -90,9 +90,14 @@ class MaintenanceMode extends WireData implements Module, ConfigurableModule {
 		);
 		// Now use $data and $fieldsModel loop to create all checkboxes
 		foreach ($fieldsModel as $f=>$fM){
-			$fields->add(
-				self::$fM['type']($f, $fM['label'], $data[$f], $fM['desc'])
-			);
+			if (substr(phpversion(),0,1)==7)
+				$fields->add(
+					self::{$fM['type']}($f, $fM['label'], $data[$f], $fM['desc'])
+				);
+			else
+				$fields->add(
+					self::$fM['type']($f, $fM['label'], $data[$f], $fM['desc'])
+				);
 		}
 		return $fields;
 	}
